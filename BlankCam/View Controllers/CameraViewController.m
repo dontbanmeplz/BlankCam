@@ -19,8 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Setup UI
+    // Setup Camera
     [self setUpCamera];
+    
+    // Make Camera Status Label invisible
+    [self.cameraModeLabel setAlpha:0.0f];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -28,8 +32,8 @@
     [UIScreen mainScreen].brightness = 0.0;
     
     // Camera stuff
-    dispatch_async( self.sessionQueue, ^{
-        switch ( self.setupResult ){
+    dispatch_async(self.sessionQueue, ^{
+        switch (self.setupResult ){
             case BlankCamSetupResultSuccess:
             {
                 [self.session startRunning];
@@ -38,7 +42,7 @@
             }
             case BlankCamSetupResultCameraNotAuthorized:
             {
-                dispatch_async( dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     NSString *message = NSLocalizedString( @"BlankCam doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera" );
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"AVCam" message:message preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
@@ -54,7 +58,7 @@
             }
             case BlankCamSetupResultSessionConfigurationFailed:
             {
-                dispatch_async( dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     NSString *message = NSLocalizedString( @"Unable to capture media", @"Alert message when something goes wrong during capture session configuration" );
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"AVCam" message:message preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
@@ -70,8 +74,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    dispatch_async( self.sessionQueue, ^{
-        if ( self.setupResult == BlankCamSetupResultSuccess ) {
+    dispatch_async(self.sessionQueue, ^{
+        if (self.setupResult == BlankCamSetupResultSuccess ) {
             [self.session stopRunning];
             //[self removeObservers];
         }
@@ -98,7 +102,7 @@
     
     // Setup the capture session.
     dispatch_async( self.sessionQueue, ^{
-        if ( self.setupResult != BlankCamSetupResultSuccess ) {
+        if (self.setupResult != BlankCamSetupResultSuccess ) {
             return;
         }
         
@@ -108,26 +112,42 @@
         AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
         
-        if ( ! videoDeviceInput ) {
+        if (!videoDeviceInput) {
             NSLog( @"Could not create video device input: %@", error );
         }
         
         [self.session beginConfiguration];
         
-        if ( [self.session canAddInput:videoDeviceInput] ) {
+        if ([self.session canAddInput:videoDeviceInput]) {
             [self.session addInput:videoDeviceInput];
+            self.videoDeviceInput = videoDeviceInput;
+            
             // Tap Recognizer for photo taking
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                            initWithTarget:self
                                            action:@selector(takePhoto)];
             [self.view addGestureRecognizer:tap];
             
+            // Left Swipe Recognizer for camera switching
+            UISwipeGestureRecognizer *switchSwipeLeft = [[UISwipeGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(switchCamera)];
+            [switchSwipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+            [self.view addGestureRecognizer:switchSwipeLeft];
+            
+            // Right Swipe Recognizer for camera switching
+            UISwipeGestureRecognizer *switchSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                         initWithTarget:self
+                                                         action:@selector(switchCamera)];
+            [switchSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+            [self.view addGestureRecognizer:switchSwipeRight];
+            
             // Swipe Recognizer for photo viewing
-            UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]
+            UISwipeGestureRecognizer *viewSwipe = [[UISwipeGestureRecognizer alloc]
                                            initWithTarget:self
                                            action:@selector(viewPhotoLibrary)];
-            [swipe setDirection:UISwipeGestureRecognizerDirectionUp];
-            [self.view addGestureRecognizer:swipe];
+            [viewSwipe setDirection:UISwipeGestureRecognizerDirectionUp];
+            [self.view addGestureRecognizer:viewSwipe];
         }
         else {
             NSLog( @"Could not add video device input to the session" );
@@ -135,12 +155,12 @@
         }
         
         AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-        if ( [self.session canAddOutput:stillImageOutput] ) {
+        if ([self.session canAddOutput:stillImageOutput]) {
             stillImageOutput.outputSettings = @{AVVideoCodecKey : AVVideoCodecJPEG};
             [self.session addOutput:stillImageOutput];
             self.stillImageOutput = stillImageOutput;
         }
-        else {
+        else{
             NSLog( @"Could not add still image output to the session" );
             self.setupResult = BlankCamSetupResultSessionConfigurationFailed;
         }
@@ -168,17 +188,17 @@
         
         // Capture a still image.
         [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^( CMSampleBufferRef imageDataSampleBuffer, NSError *error ) {
-            if ( imageDataSampleBuffer ) {
+            if (imageDataSampleBuffer) {
                 // Create image data before saving the still image to the photo library asynchronously.
                 NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                [PHPhotoLibrary requestAuthorization:^( PHAuthorizationStatus status ) {
-                    if ( status == PHAuthorizationStatusAuthorized ) {
-                        // Create an asset from the JPEG NSData representation.
-                        if ( [PHAssetCreationRequest class] ) {
+                [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status ) {
+                    if (status == PHAuthorizationStatusAuthorized) {
+                        // Create an asset
+                        if ([PHAssetCreationRequest class]) {
                             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                                 [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:imageData options:nil];
                             } completionHandler:^( BOOL success, NSError *error ) {
-                                if ( ! success ) {
+                                if (!success) {
                                     NSLog( @"Error occurred while saving image to photo library: %@", error );
                                 }
                             }];
@@ -191,14 +211,14 @@
                             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                                 NSError *error = nil;
                                 [imageData writeToURL:temporaryFileURL options:NSDataWritingAtomic error:&error];
-                                if ( error ) {
+                                if (error) {
                                     NSLog( @"Error occured while writing image data to a temporary file: %@", error );
                                 }
-                                else {
+                                else{
                                     [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:temporaryFileURL];
                                 }
-                            } completionHandler:^( BOOL success, NSError *error ) {
-                                if ( ! success ) {
+                            } completionHandler:^(BOOL success, NSError *error) {
+                                if (!success) {
                                     NSLog( @"Error occurred while saving image to photo library: %@", error );
                                 }
                                 
@@ -217,6 +237,63 @@
 
 }
 
+-(void)switchCamera {
+    // Switches between selfie and forward facing.
+    dispatch_async(self.sessionQueue, ^{
+        AVCaptureDevice *currentVideoDevice = self.videoDeviceInput.device;
+        AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
+        AVCaptureDevicePosition currentPosition = currentVideoDevice.position;
+        
+        switch (currentPosition){
+            case AVCaptureDevicePositionUnspecified:
+            case AVCaptureDevicePositionFront:
+                preferredPosition = AVCaptureDevicePositionBack;
+                break;
+            case AVCaptureDevicePositionBack:
+                preferredPosition = AVCaptureDevicePositionFront;
+                break;
+        }
+        
+        AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:preferredPosition];
+        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
+        
+        [self.session beginConfiguration];
+
+        [self.session removeInput:self.videoDeviceInput];
+        
+        if ([self.session canAddInput:videoDeviceInput]){
+            [self.session addInput:videoDeviceInput];
+            self.videoDeviceInput = videoDeviceInput;
+        }
+        else {
+            [self.session addInput:self.videoDeviceInput];
+        }
+        
+        [self.session commitConfiguration];
+        
+        dispatch_async( dispatch_get_main_queue(), ^{
+            switch (preferredPosition){
+                case AVCaptureDevicePositionUnspecified:
+                case AVCaptureDevicePositionFront:
+                    self.cameraModeLabel.text = @"Selfie Mode";
+                    break;
+                case AVCaptureDevicePositionBack:
+                    self.cameraModeLabel.text = @"Normal Mode";
+                    break;
+            }
+            [UIView animateWithDuration:0.25f animations:^{
+                [self.cameraModeLabel setAlpha:1.0f];
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.25f animations:^{
+                    [self.cameraModeLabel setAlpha:0.0f];
+                } completion:^(BOOL finished) {
+                }];
+            }];
+        });
+        
+    } );
+}
+
 -(void)viewPhotoLibrary {
     // Get last photo taken and set up to display in new controller.
     ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
@@ -232,8 +309,9 @@
                                                                   usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                                                                       if (nil != result) {
                                                                           ALAssetRepresentation *repr = [result defaultRepresentation];
+                                                                          
                                                                           // Most recent image
-                                                                          self.lastPhotoTaken = [UIImage imageWithCGImage:[repr fullScreenImage]];
+                                                                        self.lastPhotoTaken = [UIImage imageWithCGImage:[repr fullScreenImage]];
 
                                                                         *stop = YES;
                                                                           [self performSegueWithIdentifier:@"toPreview" sender:self];
@@ -256,8 +334,8 @@
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
     AVCaptureDevice *captureDevice = devices.firstObject;
     
-    for ( AVCaptureDevice *device in devices ) {
-        if ( device.position == position ) {
+    for (AVCaptureDevice *device in devices) {
+        if (device.position == position) {
             captureDevice = device;
             break;
         }

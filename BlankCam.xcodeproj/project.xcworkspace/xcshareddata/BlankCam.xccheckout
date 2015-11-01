@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E6A5CA43-6C35-4D83-B074-F2D5666A8B1C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BlankCam</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9AE4D4D70AB408C2E097C17E1E14E79D9EDAA77D</key>
+		<string>github.com:robertcash/BlankCam.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BlankCam.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9AE4D4D70AB408C2E097C17E1E14E79D9EDAA77D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:robertcash/BlankCam.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9AE4D4D70AB408C2E097C17E1E14E79D9EDAA77D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9AE4D4D70AB408C2E097C17E1E14E79D9EDAA77D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BlankCam</string>
+		</dict>
+	</array>
+</dict>
+</plist>

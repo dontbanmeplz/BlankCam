@@ -15,6 +15,8 @@
 // UI elements
 @property (weak, nonatomic) IBOutlet UIImageView *lastPhotoTakenImageView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+
 @property KVNProgressConfiguration *configuration;
 
 // Variables

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Welcome Screen View Controller-->
@@ -21,19 +22,19 @@
                                 <rect key="frame" x="13" y="93" width="293" height="381"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to BlankCam!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWN-dz-N4Z">
-                                        <rect key="frame" x="7" y="31" width="280" height="115"/>
+                                        <rect key="frame" x="7" y="31" width="280" height="90"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1. Tap the screen anywhere to snap a photo (it saves by default)!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="HBH-Gl-dEF">
-                                        <rect key="frame" x="7" y="156" width="280" height="50"/>
+                                        <rect key="frame" x="7" y="129" width="280" height="50"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bJ-Rb-Awh">
-                                        <rect key="frame" x="79" y="310" width="136" height="40"/>
+                                        <rect key="frame" x="79" y="318" width="136" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                                         <state key="normal" title="Got It!">
@@ -43,8 +44,14 @@
                                             <segue destination="BYZ-38-t0r" kind="modal" modalTransitionStyle="crossDissolve" id="0YQ-tb-BaA"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2. Swipe up on the screen to see the last photo you took!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="YUk-CP-v47">
-                                        <rect key="frame" x="37" y="214" width="219" height="70"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3. Swipe up on the screen to see the last photo you took!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="YUk-CP-v47">
+                                        <rect key="frame" x="23" y="245" width="249" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2. Swipe screen left or right to switch cameras!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="l7b-DP-k4h">
+                                        <rect key="frame" x="6" y="187" width="280" height="50"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -82,15 +89,30 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gk-bi-70B">
+                                <rect key="frame" x="66" y="259" width="188" height="50"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="4gk-bi-70B" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="239" id="KQK-7C-xCJ"/>
+                            <constraint firstItem="4gk-bi-70B" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="o2M-XB-dqy"/>
+                            <constraint firstItem="4gk-bi-70B" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tQZ-Hp-rh7"/>
+                            <constraint firstItem="4gk-bi-70B" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="wJm-NT-f9c"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="cameraModeLabel" destination="4gk-bi-70B" id="p5P-Gb-v04"/>
                         <segue destination="FAu-Ue-m2G" kind="modal" identifier="toPreview" id="bZH-nJ-qj7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="110.39999999999999" y="248.02666666666667"/>
+            <point key="canvasLocation" x="110" y="248"/>
         </scene>
         <!--Last Photo View Controller-->
         <scene sceneID="BFB-oM-5Qk">
@@ -108,44 +130,50 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9O-2A-Pc8">
-                                <rect key="frame" x="50" y="508" width="220" height="40"/>
+                                <rect key="frame" x="20" y="508" width="130" height="40"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="h3a-du-M0i"/>
-                                    <constraint firstAttribute="height" constant="40" id="qOP-VG-u6g"/>
+                                    <constraint firstAttribute="height" constant="40" id="5J4-II-zlr"/>
+                                    <constraint firstAttribute="width" constant="130" id="IGw-sL-7Ey"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
-                                <state key="normal" title="Delete Photo?">
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <state key="normal" title="Delete Photo">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="deletePhoto:" destination="FAu-Ue-m2G" eventType="touchUpInside" id="80V-LU-6rK"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe down to dismiss." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnu-3J-dZU">
-                                <rect key="frame" x="66" y="20" width="187" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q3C-Hh-9b1">
+                                <rect key="frame" x="170" y="508" width="130" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="JE7-3r-jal"/>
-                                    <constraint firstAttribute="width" constant="187" id="XyD-8b-4qM"/>
+                                    <constraint firstAttribute="height" constant="40" id="5Gy-sZ-WB9"/>
+                                    <constraint firstAttribute="width" constant="130" id="azi-OE-1y9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <state key="normal" title="Back To Camera">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="FAu-Ue-m2G" eventType="touchUpInside" id="GyH-Ma-TRL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Q3C-Hh-9b1" firstAttribute="top" secondItem="j30-CG-Vdx" secondAttribute="bottom" constant="-60" id="2QQ-tX-WdX"/>
                             <constraint firstItem="j30-CG-Vdx" firstAttribute="top" secondItem="2zB-Pe-2V4" secondAttribute="top" id="CU4-vb-Fph"/>
+                            <constraint firstItem="j30-CG-Vdx" firstAttribute="leading" secondItem="O9O-2A-Pc8" secondAttribute="trailing" constant="-150" id="EVT-9F-IgT"/>
                             <constraint firstItem="j30-CG-Vdx" firstAttribute="leading" secondItem="2zB-Pe-2V4" secondAttribute="leading" id="QHh-X2-ocY"/>
-                            <constraint firstItem="O9O-2A-Pc8" firstAttribute="top" secondItem="j30-CG-Vdx" secondAttribute="bottom" constant="-60" id="l3A-aV-Nzj"/>
-                            <constraint firstItem="j30-CG-Vdx" firstAttribute="top" secondItem="rnu-3J-dZU" secondAttribute="bottom" constant="-41" id="pFP-pH-Oaw"/>
-                            <constraint firstItem="rnu-3J-dZU" firstAttribute="centerX" secondItem="j30-CG-Vdx" secondAttribute="centerX" id="phf-7f-cA1"/>
+                            <constraint firstItem="Q3C-Hh-9b1" firstAttribute="leading" secondItem="j30-CG-Vdx" secondAttribute="trailing" constant="-150" id="fRE-Fw-HWq"/>
+                            <constraint firstItem="O9O-2A-Pc8" firstAttribute="top" secondItem="j30-CG-Vdx" secondAttribute="bottom" constant="-60" id="iJq-aA-fYt"/>
                             <constraint firstItem="j30-CG-Vdx" firstAttribute="bottom" secondItem="4uw-Nq-SI2" secondAttribute="top" id="vmt-g7-v9h"/>
-                            <constraint firstItem="O9O-2A-Pc8" firstAttribute="centerX" secondItem="2zB-Pe-2V4" secondAttribute="centerX" id="xRw-Qk-4xQ"/>
                             <constraint firstAttribute="trailing" secondItem="j30-CG-Vdx" secondAttribute="trailing" id="z8Q-5O-bSn"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="Q3C-Hh-9b1" id="e6m-p4-dVW"/>
                         <outlet property="deleteButton" destination="O9O-2A-Pc8" id="F1g-oi-GhO"/>
                         <outlet property="lastPhotoTakenImageView" destination="j30-CG-Vdx" id="MaZ-s0-JBl"/>
                     </connections>

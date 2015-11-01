@@ -27,10 +27,15 @@ typedef NS_ENUM( NSInteger, BlankCamSetupResult ) {
 // Session management.
 @property (nonatomic) dispatch_queue_t sessionQueue;
 @property (nonatomic) AVCaptureSession *session;
+@property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (nonatomic,retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic) BlankCamSetupResult setupResult;
 @property (nonatomic, getter=isSessionRunning) BOOL sessionRunning;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
+
+// UI Elements
+@property (weak, nonatomic) IBOutlet UILabel *cameraModeLabel;
+
 
 // Other variables
 @property UIImage *lastPhotoTaken;

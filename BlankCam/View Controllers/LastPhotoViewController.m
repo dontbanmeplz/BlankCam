@@ -37,15 +37,12 @@
     self.deleteButton.layer.cornerRadius = 10;
     self.deleteButton.clipsToBounds = YES;
     
+    // Edit Back Button
+    self.backButton.layer.cornerRadius = 10;
+    self.backButton.clipsToBounds = YES;
+    
     // Set Photo
     self.lastPhotoTakenImageView.image = self.lastPhotoTaken;
-    
-    // Set up Gesture for dismiss
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]
-                                       initWithTarget:self
-                                       action:@selector(dismiss)];
-    [swipe setDirection:UISwipeGestureRecognizerDirectionDown];
-    [self.view addGestureRecognizer:swipe];
     
     // Set up progress indicator
     self.configuration = [[KVNProgressConfiguration alloc] init];
@@ -84,6 +81,9 @@
         }
         [KVNProgress dismiss];
     }];
+}
+- (IBAction)back:(id)sender {
+    [self dismiss];
 }
 
 -(void)dismiss {
