@@ -1,2 +1,2 @@
 # BlankCam
-Camera app that takes "secret" photos by looking like an iPhone is turned off.  
+iOS camera app that takes "secret" photos by making your iPhone looked turned off.
