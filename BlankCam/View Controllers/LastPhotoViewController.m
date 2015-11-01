@@ -68,7 +68,7 @@
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
     PHAsset *lastImageAsset = [fetchResult lastObject];
-    
+
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         [KVNProgress dismiss];
         [KVNProgress show];

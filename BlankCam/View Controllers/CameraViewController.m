@@ -77,7 +77,6 @@
     dispatch_async(self.sessionQueue, ^{
         if (self.setupResult == BlankCamSetupResultSuccess ) {
             [self.session stopRunning];
-            //[self removeObservers];
         }
     } );
     
@@ -296,6 +295,7 @@
 
 -(void)viewPhotoLibrary {
     // Get last photo taken and set up to display in new controller.
+    self.lastPhotoTaken = nil;
     ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
     [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                                  usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
@@ -310,7 +310,7 @@
                                                                       if (nil != result) {
                                                                           ALAssetRepresentation *repr = [result defaultRepresentation];
                                                                           
-                                                                          // Most recent image
+                                                                        // Most recent image
                                                                         self.lastPhotoTaken = [UIImage imageWithCGImage:[repr fullScreenImage]];
 
                                                                         *stop = YES;

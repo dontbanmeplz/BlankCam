@@ -45,6 +45,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // Make screen brightness 0 to make screen look off
+    [UIScreen mainScreen].brightness = 0.5;
 }
 
 @end
